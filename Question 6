@@ -1,0 +1,83 @@
+import java.awt.*;
+import java.awt.event.*;
+
+class Q6 extends Frame implements ActionListener {
+    TextField id, name, dept, des, salary;
+    Choice department;
+    CheckboxGroup g;
+    Checkbox male, female;
+    TextArea output;
+    Button submit, clear;
+
+    Q6() {
+        setLayout(new FlowLayout());
+
+        add(new Label("Employee ID:"));
+        id = new TextField(15); add(id);
+
+        add(new Label("Name:"));
+        name = new TextField(15); add(name);
+
+        add(new Label("Department:"));
+        dept = new TextField(15); add(dept);
+
+        add(new Label("Designation:"));
+        des = new TextField(15); add(des);
+
+        add(new Label("Salary:"));
+        salary = new TextField(15); add(salary);
+
+        add(new Label("Gender:"));
+        g = new CheckboxGroup();
+        male = new Checkbox("Male", g, true);
+        female = new Checkbox("Female", g, false);
+        add(male); add(female);
+
+        add(new Label("Select Department:"));
+        department = new Choice();
+        department.add("IT");
+        department.add("HR");
+        department.add("Finance");
+        add(department);
+
+        submit = new Button("Submit");
+        clear = new Button("Clear");
+        add(submit); add(clear);
+
+        output = new TextArea(5, 30);
+        add(output);
+
+        submit.addActionListener(this);
+        clear.addActionListener(this);
+
+        setSize(350, 500);
+        setTitle("Employee Registration");
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == submit) {
+            String gender = male.getState() ? "Male" : "Female";
+
+            output.setText("Employee ID: " + id.getText() +
+                "\nName: " + name.getText() +
+                "\nDepartment: " + dept.getText() +
+                "\nDesignation: " + des.getText() +
+                "\nSalary: " + salary.getText() +
+                "\nGender: " + gender +
+                "\nSelected Department: " +
+                department.getSelectedItem());
+        } else {
+            id.setText("");
+            name.setText("");
+            dept.setText("");
+            des.setText("");
+            salary.setText("");
+            output.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Q6();
+    }
+}
