@@ -1,0 +1,65 @@
+import java.awt.*;
+import java.awt.event.*;
+
+class Q1 extends Frame implements ActionListener {
+    TextField n, r, c;
+    Checkbox male, female;
+    Choice sem;
+    Button submit, reset;
+
+    Q1() {
+        setLayout(new FlowLayout());
+
+        add(new Label("Student Name:"));
+        n = new TextField(15); add(n);
+
+        add(new Label("Roll Number:"));
+        r = new TextField(15); add(r);
+
+        add(new Label("Course:"));
+        c = new TextField(15); add(c);
+
+        add(new Label("Gender:"));
+        CheckboxGroup g = new CheckboxGroup();
+        male = new Checkbox("Male", g, true);
+        female = new Checkbox("Female", g, false);
+        add(male); add(female);
+
+        add(new Label("Semester:"));
+        sem = new Choice();
+        for(int i=1; i<=8; i++)
+            sem.add("Semester " + i);
+        add(sem);
+
+        submit = new Button("Submit");
+        reset = new Button("Reset");
+        add(submit); add(reset);
+
+        submit.addActionListener(this);
+        reset.addActionListener(this);
+
+        setSize(300, 400);
+        setTitle("Student Registration");
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == submit) {
+            String gender = male.getState() ? "Male" : "Female";
+            System.out.println("Name: " + n.getText());
+            System.out.println("Roll No: " + r.getText());
+            System.out.println("Course: " + c.getText());
+            System.out.println("Gender: " + gender);
+            System.out.println("Semester: " + sem.getSelectedItem());
+        } else {
+            n.setText("");
+            r.setText("");
+            c.setText("");
+            sem.select(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        new Q1();
+    }
+}
