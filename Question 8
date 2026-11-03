@@ -1,0 +1,78 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
+
+class Q8 extends JFrame implements ActionListener {
+    JTextArea area;
+    JMenuItem ne, op, sa, ex;
+
+    Q8() {
+        area = new JTextArea();
+        add(new JScrollPane(area));
+
+        JMenuBar bar = new JMenuBar();
+        JMenu file = new JMenu("File");
+
+        ne = new JMenuItem("New");
+        op = new JMenuItem("Open");
+        sa = new JMenuItem("Save");
+        ex = new JMenuItem("Exit");
+
+        file.add(ne);
+        file.add(op);
+        file.add(sa);
+        file.add(ex);
+        bar.add(file);
+        setJMenuBar(bar);
+
+        ne.addActionListener(this);
+        op.addActionListener(this);
+        sa.addActionListener(this);
+        ex.addActionListener(this);
+
+        setSize(400, 300);
+        setTitle("Simple Notepad");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        try {
+            if(e.getSource() == ne) {
+                area.setText("");
+            }
+
+            if(e.getSource() == op) {
+                JFileChooser fc = new JFileChooser();
+                if(fc.showOpenDialog(this) ==
+                   JFileChooser.APPROVE_OPTION) {
+                    BufferedReader br = new BufferedReader(
+                        new FileReader(fc.getSelectedFile()));
+                    area.read(br, null);
+                    br.close();
+                }
+            }
+
+            if(e.getSource() == sa) {
+                JFileChooser fc = new JFileChooser();
+                if(fc.showSaveDialog(this) ==
+                   JFileChooser.APPROVE_OPTION) {
+                    FileWriter fw = new FileWriter(
+                        fc.getSelectedFile());
+                    fw.write(area.getText());
+                    fw.close();
+                }
+            }
+
+            if(e.getSource() == ex) {
+                System.exit(0);
+            }
+        } catch(IOException ex) {
+            JOptionPane.showMessageDialog(this, "File Error");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Q8();
+    }
+}
