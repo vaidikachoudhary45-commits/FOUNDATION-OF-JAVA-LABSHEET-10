@@ -1,0 +1,72 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class Q7 extends JFrame implements ActionListener {
+    JTextField temp;
+    JRadioButton cf, fc;
+    JButton convert, clear;
+    JLabel result;
+
+    Q7() {
+        setLayout(new FlowLayout());
+
+        add(new JLabel("Temperature:"));
+        temp = new JTextField(10);
+        add(temp);
+
+        cf = new JRadioButton("Celsius to Fahrenheit");
+        fc = new JRadioButton("Fahrenheit to Celsius");
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(cf);
+        bg.add(fc);
+
+        add(cf); add(fc);
+
+        convert = new JButton("Convert");
+        clear = new JButton("Clear");
+        add(convert); add(clear);
+
+        result = new JLabel("Result:");
+        add(result);
+
+        convert.addActionListener(this);
+        clear.addActionListener(this);
+
+        setSize(350, 250);
+        setTitle("Temperature Converter");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == clear) {
+            temp.setText("");
+            result.setText("Result:");
+            return;
+        }
+
+        try {
+            double c = Double.parseDouble(temp.getText());
+            double ans;
+
+            if(cf.isSelected()) {
+                ans = (c * 9 / 5) + 32;
+            } else if(fc.isSelected()) {
+                ans = (c - 32) * 5 / 9;
+            } else {
+                result.setText("Select conversion type");
+                return;
+            }
+
+            result.setText("Result: " + ans);
+        } catch(Exception ex) {
+            result.setText("Invalid Input");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Q7();
+    }
+}
