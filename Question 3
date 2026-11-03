@@ -1,0 +1,55 @@
+import javax.swing.*;
+import java.awt.event.*;
+
+class Q3 extends JFrame implements ActionListener {
+    JTextField user;
+    JPasswordField pass;
+    JButton login, reset;
+
+    Q3() {
+        setLayout(null);
+
+        add(new JLabel("Username:")).setBounds(30, 30, 100, 25);
+        user = new JTextField();
+        user.setBounds(130, 30, 150, 25);
+        add(user);
+
+        add(new JLabel("Password:")).setBounds(30, 70, 100, 25);
+        pass = new JPasswordField();
+        pass.setBounds(130, 70, 150, 25);
+        add(pass);
+
+        login = new JButton("Login");
+        reset = new JButton("Reset");
+
+        login.setBounds(50, 120, 90, 30);
+        reset.setBounds(160, 120, 90, 30);
+
+        add(login); add(reset);
+
+        login.addActionListener(this);
+        reset.addActionListener(this);
+
+        setSize(350, 220);
+        setTitle("Student Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == login) {
+            if(user.getText().equals("admin") &&
+               new String(pass.getPassword()).equals("1234"))
+                JOptionPane.showMessageDialog(this, "Login Successful");
+            else
+                JOptionPane.showMessageDialog(this, "Invalid Login");
+        } else {
+            user.setText("");
+            pass.setText("");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Q3();
+    }
+}
