@@ -1,0 +1,104 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class Q9 extends JFrame implements ActionListener {
+    JTextField name, roll, course;
+    JRadioButton a, b, c, d, e;
+    JCheckBox x, y, z;
+    JTextArea comments;
+    JButton submit, reset;
+
+    Q9() {
+        setLayout(new FlowLayout());
+
+        add(new JLabel("Student Name:"));
+        name = new JTextField(12); add(name);
+
+        add(new JLabel("Roll Number:"));
+        roll = new JTextField(12); add(roll);
+
+        add(new JLabel("Course:"));
+        course = new JTextField(12); add(course);
+
+        add(new JLabel("Rating:"));
+
+        a = new JRadioButton("Excellent");
+        b = new JRadioButton("Very Good");
+        c = new JRadioButton("Good");
+        d = new JRadioButton("Average");
+        e = new JRadioButton("Poor");
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(a); bg.add(b); bg.add(c);
+        bg.add(d); bg.add(e);
+
+        add(a); add(b); add(c); add(d); add(e);
+
+        add(new JLabel("Feedback:"));
+        x = new JCheckBox("Teaching");
+        y = new JCheckBox("Laboratory");
+        z = new JCheckBox("Assignments");
+        add(x); add(y); add(z);
+
+        add(new JLabel("Comments:"));
+        comments = new JTextArea(3, 20);
+        add(comments);
+
+        submit = new JButton("Submit");
+        reset = new JButton("Reset");
+        add(submit); add(reset);
+
+        submit.addActionListener(this);
+        reset.addActionListener(this);
+
+        setSize(400, 450);
+        setTitle("Student Feedback");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == submit) {
+            String rating = a.isSelected() ? "Excellent" :
+                b.isSelected() ? "Very Good" :
+                c.isSelected() ? "Good" :
+                d.isSelected() ? "Average" : "Poor";
+
+            String feedback = "";
+            if(x.isSelected()) feedback += "Teaching ";
+            if(y.isSelected()) feedback += "Laboratory ";
+            if(z.isSelected()) feedback += "Assignments ";
+
+            JOptionPane.showMessageDialog(this,
+                "Name: " + name.getText() +
+                "\nRoll No: " + roll.getText() +
+                "\nCourse: " + course.getText() +
+                "\nRating: " + rating +
+                "\nFeedback: " + feedback +
+                "\nComments: " + comments.getText());
+        } else {
+            name.setText("");
+            roll.setText("");
+            course.setText("");
+            comments.setText("");
+
+            bgReset();
+            x.setSelected(false);
+            y.setSelected(false);
+            z.setSelected(false);
+        }
+    }
+
+    void bgReset() {
+        a.setSelected(false);
+        b.setSelected(false);
+        c.setSelected(false);
+        d.setSelected(false);
+        e.setSelected(false);
+    }
+
+    public static void main(String[] args) {
+        new Q9();
+    }
+}
